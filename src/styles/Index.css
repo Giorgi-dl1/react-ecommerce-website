@@ -1,0 +1,22 @@
+@import url("https://fonts.googleapis.com/css2?family=Aboreto&family=Inter&family=Raleway:wght@300;400&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-size: 16px;
+  font-family: "Raleway", sans-serif;
+}
+.app {
+  margin: 0 3rem;
+}
+.error {
+  width: 500px;
+  background-color: hsl(0, 98%, 61%);
+  color: white;
+  padding: 1rem;
+  max-width: 90vw;
+  border-radius: 7px;
+}

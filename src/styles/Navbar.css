@@ -1,0 +1,91 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.categories {
+  display: flex;
+  align-items: center;
+  text-transform: uppercase;
+  flex: 1;
+}
+.currencies-cart {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.logo {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.logo img {
+  cursor: pointer;
+}
+.currency-dropdown {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  color: #1d1f22;
+  cursor: pointer;
+  position: relative;
+}
+.cart {
+  cursor: pointer;
+}
+.arrow {
+  display: flex;
+  transition: 0.5s;
+}
+.arrow.rotate {
+  transform: rotate(180deg);
+}
+.category {
+  padding: 2rem;
+  border-bottom: 1px solid white;
+  transition: 0.5s;
+}
+.category a {
+  color: #1d1f22;
+  text-decoration: none;
+  cursor: pointer;
+  transition: 0.5s;
+}
+.hover a:hover {
+  opacity: 0.5;
+}
+
+.active a {
+  color: #5ece7b;
+}
+
+.active {
+  border-bottom: 1px solid #5ece7b;
+}
+.currencies-cont {
+  position: absolute;
+  top: 65px;
+  box-shadow: 0 0 7px 0px rgba(233, 233, 233, 0.75);
+  display: none;
+}
+.currency {
+  line-height: 28px;
+  font-weight: 500;
+  color: #1d1f22;
+  font-size: 18px;
+  padding: 8px 20px;
+  cursor: pointer;
+  transition: 0.5s;
+}
+.currency:hover {
+  background: #eeeeee;
+}
+.dropdown-active {
+  display: block;
+}
