@@ -73,6 +73,8 @@
   top: 65px;
   box-shadow: 0 0 7px 0px rgba(233, 233, 233, 0.75);
   display: none;
+  z-index: 2;
+  background-color: white;
 }
 .currency {
   line-height: 28px;

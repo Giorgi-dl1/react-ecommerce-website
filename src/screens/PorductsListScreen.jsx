@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Product from "../components/Product";
 import "../styles/PorductsListScreen.css";
+import { Link } from "react-router-dom";
 export default class PorductsListScreen extends Component {
   componentDidMount() {
     this.props.setCategory(this.props.category);
@@ -16,7 +17,7 @@ export default class PorductsListScreen extends Component {
             <Product
               product={product}
               activeCurrency={this.props.activeCurrency}
-              key={product.name}
+              key={product.id}
             />
           ))}
         </div>

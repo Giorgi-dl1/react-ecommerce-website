@@ -1,28 +1,34 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
+import { Link } from "react-router-dom";
 import cart from "../images/cart.svg";
-export default class Product extends Component {
+export default class Product extends PureComponent {
   render() {
     const { product } = this.props;
     const price = product.prices.filter(
       (item) => item.currency.label == this.props.activeCurrency.label
     )[0];
-    console.log(price);
     return (
-      <div className="product">
+      <div className={product.inStock ? "product instock" : "product outstock"}>
         <div className="image-cart">
-          <div className="image">
-            <img src={product.gallery[0]} alt={product.name} />{" "}
-          </div>
+          <Link to={`/product/${product.id}`}>
+            <div className="image">
+              <img src={product.gallery[0]} alt={product.name} />{" "}
+            </div>
+          </Link>
           <div className="cart-icon">
             <img src={cart} alt="cart-icon" />
           </div>
         </div>
 
-        <div className="name">
-          <span>{product.brand} </span>
-          <span>{product.name}</span>
+        <div className={product.inStock ? "name" : "name grey"}>
+          <Link to={`/product/${product.id}`}>
+            <span>
+              <span>{product.brand} </span>
+              <span>{product.name}</span>
+            </span>
+          </Link>
         </div>
-        <div className="price">
+        <div className={product.inStock ? "price" : "price grey"}>
           <span>{price.currency.symbol}</span>
           <span>{price.amount}</span>
         </div>

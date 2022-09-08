@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 import LoadingBox from "./components/LoadingBox";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import PorductsListScreen from "./screens/PorductsListScreen";
+import ProductScreen from "./screens/ProductScreen";
 
 const GET_CATEGORIES = gql`
   query {
@@ -72,6 +73,7 @@ class App extends Component {
       "activeCurrency",
       JSON.stringify({ symbol: currency.symbol, label: currency.label })
     );
+    console.log("currency ");
   };
   setDropdown = () => {
     this.setState((state) => ({
@@ -118,6 +120,7 @@ class App extends Component {
                 }
               />
             ))}
+            <Route path="/product/:id" element={<ProductScreen />} />
           </Routes>
         </div>
       </BrowserRouter>

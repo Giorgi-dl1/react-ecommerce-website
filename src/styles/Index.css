@@ -20,3 +20,6 @@ body {
   max-width: 90vw;
   border-radius: 7px;
 }
+a {
+  text-decoration: none;
+}
