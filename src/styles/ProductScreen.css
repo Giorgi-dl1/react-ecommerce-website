@@ -86,6 +86,9 @@
   max-width: 500px;
   flex-wrap: wrap;
 }
+.minicart-attribute-items {
+  gap: 8px;
+}
 .label {
   margin-bottom: 8px;
   font-family: "Roboto Condensed", sans-serif;
@@ -105,7 +108,15 @@
   cursor: pointer;
   transition: 0.5s;
   box-shadow: 0 0 7px rgba(0, 0, 0, 0.15);
+  padding: 0 0.1rem;
 }
+.item.minicart-item {
+  cursor: default;
+  min-width: 24px !important;
+  height: 24px !important;
+  font-size: 14px !important;
+}
+
 .item span {
   font-family: " Source Sans Pro";
   font-size: 16px;
@@ -119,6 +130,15 @@
   content: "";
   width: 34px;
   height: 34px;
+  border: 1px solid #5ece7b;
+  position: absolute;
+  top: -2px;
+  left: -2px;
+}
+.active-minicart-swatch-attribute::after {
+  content: "";
+  width: 18px;
+  height: 18px;
   border: 1px solid #5ece7b;
   position: absolute;
   top: -2px;

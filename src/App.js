@@ -57,6 +57,7 @@ class App extends Component {
         label: "USD",
       },
       dropdown: false,
+      showMinicart: false,
       cartItems: localStorage.getItem("cartItems")
         ? JSON.parse(localStorage.getItem("cartItems"))
         : [],
@@ -69,7 +70,11 @@ class App extends Component {
     });
     localStorage.setItem("activeCategory", category);
   };
-
+  toggleMinicart = () => {
+    this.setState((state) => ({
+      showMinicart: !state.showMinicart,
+    }));
+  };
   setCurrency = (currency) => {
     this.setState({
       activeCurrency: currency,
@@ -112,8 +117,6 @@ class App extends Component {
   };
 
   render() {
-    console.log(this.state.cartItems);
-
     const { data } = this.props;
     const { error, loading } = data;
     return loading ? (
@@ -135,37 +138,40 @@ class App extends Component {
             dropdown={this.state.dropdown}
             setDropdown={this.setDropdown}
             cartItems={this.state.cartItems}
+            showMinicart={this.state.showMinicart}
+            toggleMinicart={this.toggleMinicart}
           />
+          <div className={this.state.showMinicart ? "background" : ""}>
+            <Routes>
+              {data?.categories?.map((category) => (
+                <Route
+                  key={category.name}
+                  path={
+                    category.name === "all" ? "/" : `/category/${category.name}`
+                  }
+                  element={
+                    <PorductsListScreen
+                      products={category.products}
+                      category={category.name}
+                      setCategory={this.setCategory}
+                      activeCurrency={this.state.activeCurrency}
+                      addToCart={this.addToCart}
+                    />
+                  }
+                />
+              ))}
 
-          <Routes>
-            {data?.categories?.map((category) => (
               <Route
-                key={category.name}
-                path={
-                  category.name === "all" ? "/" : `/category/${category.name}`
-                }
+                path="/product/:id"
                 element={
-                  <PorductsListScreen
-                    products={category.products}
-                    category={category.name}
-                    setCategory={this.setCategory}
+                  <ProductScreen
                     activeCurrency={this.state.activeCurrency}
                     addToCart={this.addToCart}
                   />
                 }
               />
-            ))}
-
-            <Route
-              path="/product/:id"
-              element={
-                <ProductScreen
-                  activeCurrency={this.state.activeCurrency}
-                  addToCart={this.addToCart}
-                />
-              }
-            />
-          </Routes>
+            </Routes>
+          </div>
         </div>
       </BrowserRouter>
     );

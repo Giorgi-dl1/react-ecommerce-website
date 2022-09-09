@@ -35,9 +35,12 @@
   color: #1d1f22;
   cursor: pointer;
 }
+
 .cart {
-  cursor: pointer;
   position: relative;
+}
+.nav__cart-icon {
+  cursor: pointer;
 }
 .arrow {
   display: flex;
@@ -81,6 +84,7 @@
   background-color: white;
   width: 115px;
 }
+
 .currency {
   line-height: 28px;
   font-weight: 500;

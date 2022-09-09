@@ -1,0 +1,52 @@
+.minicart {
+  position: absolute;
+  width: 325px;
+  height: 0;
+  overflow: hidden;
+  right: -20px;
+  top: 54px;
+  z-index: 10;
+  transition: 1s;
+  background-color: white;
+}
+
+.background::after {
+  content: "";
+  background-color: #39374838;
+  position: absolute;
+  top: 84px;
+  left: -3rem;
+  right: -3rem;
+  bottom: 0;
+  z-index: 2;
+}
+.header {
+  margin: 32px 0;
+
+  font-size: 16px;
+  line-height: 26px;
+}
+.bag {
+  font-weight: 700;
+}
+.minicart.show {
+  height: 677px;
+}
+.minicart-label {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0px;
+  margin: 8px 0;
+}
+.minicart-price {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 26px;
+  color: #1d1f22;
+}
+.brand-name {
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 26px;
+}

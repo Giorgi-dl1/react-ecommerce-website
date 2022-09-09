@@ -12,7 +12,9 @@ body {
 }
 .app {
   margin: 0 3rem;
+  position: relative;
 }
+
 .error {
   width: 500px;
   background-color: hsl(0, 98%, 61%);
