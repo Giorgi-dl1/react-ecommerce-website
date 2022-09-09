@@ -3,6 +3,7 @@ import { PureComponent } from "react";
 import { graphql } from "@apollo/client/react/hoc";
 import LoadingBox from "../components/LoadingBox";
 import "../styles/ProductScreen.css";
+import AttributeItem from "../components/AttributeItem";
 
 const GET_PRODUCT = gql`
   query GET_PRODUCT($productId: String!) {
@@ -40,7 +41,6 @@ class ProductScreen extends PureComponent {
     super(props);
     this.state = {
       image: "",
-      attributes: [],
     };
   }
   setImage = (data) => {
@@ -49,29 +49,18 @@ class ProductScreen extends PureComponent {
     });
   };
   setAttribute = (name, item) => {
-    const existItem = this.state.attributes.filter(
-      (item) => item.name === name
-    );
-    if (existItem.length) {
-      this.setState((state) => ({
-        attributes: [
-          ...state.attributes.map((attribute) =>
-            attribute.name === name ? { name, item } : attribute
-          ),
-        ],
-      }));
-    } else {
-      console.log("noneExist");
-      this.setState((state) => ({
-        attributes: [...state.attributes, { name, item }],
-      }));
-    }
+    let stateObject = {};
+    stateObject[name] = item;
+    this.setState(stateObject);
+    // console.log(this.state);
   };
   render() {
     const { data } = this.props;
     const { error, loading, product } = data;
-    // console.log(product?.attributes);
-    console.log(this.state.attributes);
+    const price = product?.prices?.filter(
+      (item) => item.currency.label == this.props.activeCurrency.label
+    )[0];
+    console.log(this.state);
     return loading ? (
       <LoadingBox />
     ) : error ? (
@@ -100,51 +89,33 @@ class ProductScreen extends PureComponent {
           <div className="attributes">
             {product.attributes?.map((attribute) => (
               <div className="attribute" key={attribute.name}>
-                <div className="attribute-name">{attribute.name}:</div>
+                <div className="label">{attribute.name}:</div>
                 <div className="attribute-items">
                   {attribute.items?.map((item, index) => {
-                    return attribute.type === "swatch" ? (
-                      <div
+                    return (
+                      <AttributeItem
+                        item={item}
+                        type={attribute.type}
+                        attributeName={attribute.name}
+                        setAttribute={this.setAttribute}
                         key={item.id}
-                        style={{
-                          width: 32,
-                          height: 32,
-                          backgroundColor: item.value,
-                          cursor: "pointer",
-                        }}
-                        // eslint-disable-next-line array-callback-return
-                        className={this.state?.attributes?.map((sItem) =>
-                          sItem.name === attribute.name &&
-                          sItem.item.value === item.value
-                            ? " active-attribute"
-                            : ""
-                        )}
-                        onClick={() => this.setAttribute(attribute.name, item)}
-                      ></div>
-                    ) : (
-                      <div
-                        // eslint-disable-next-line array-callback-return
-                        className={this.state?.attributes?.map((sItem) => {
-                          if (
-                            sItem.name === attribute.name &&
-                            sItem.item.value === item.value
-                          ) {
-                            console.log("works");
-                            return "active-attribute item";
-                          } else {
-                            return "item";
-                          }
-                        })}
-                        key={item.id}
-                        onClick={() => this.setAttribute(attribute.name, item)}
-                      >
-                        <span>{item.value}</span>
-                      </div>
+                        activeAttribute={this.state[attribute.name]}
+                        index={index}
+                      />
                     );
                   })}
                 </div>
               </div>
             ))}
+          </div>
+          <div className="label">PRICE:</div>
+          <div className="price-productScreen">
+            <span>{price.currency.symbol}</span>
+            <span>{price.amount}</span>
+          </div>
+          <button>ADD TO CART</button>
+          <div className="description">
+            <div dangerouslySetInnerHTML={{ __html: product.description }} />
           </div>
         </div>
       </div>

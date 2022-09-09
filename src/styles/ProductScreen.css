@@ -35,8 +35,11 @@
   height: 80px;
   cursor: pointer;
   margin-right: 0.5rem;
+  border: 2px solid transparent;
+  transition: all 25ms linear;
 }
 .thumbnail:hover {
+  border: 2px solid #5ece76;
   opacity: 0.8;
 }
 .thumbnail img {
@@ -45,6 +48,7 @@
   object-fit: cover;
 }
 .main-image {
+  overflow: hidden;
   width: 610px;
   height: 511px;
 }
@@ -53,17 +57,23 @@
   height: 100%;
   object-fit: scale-down;
   object-position: 50% 50%;
+
+  cursor: zoom-in;
+  transition: 1s ease;
+}
+.main-image img:hover {
+  transform: scale(1.5);
 }
 .brand {
   font-weight: 600;
-  margin-bottom: 1rem;
+  margin-bottom: 14px;
 }
 .product-name,
 .brand {
   font-size: 30px;
 }
 .attributes {
-  margin-top: 43px;
+  margin: 40px 0;
 }
 .attribute {
   margin-bottom: 24px;
@@ -74,9 +84,14 @@
   max-width: 500px;
   flex-wrap: wrap;
 }
-.attribute-name {
-  font-weight: 700;
+.label {
   margin-bottom: 8px;
+  font-family: "Roboto Condensed", sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 18px;
+  letter-spacing: 0em;
+  text-transform: uppercase;
 }
 .item {
   min-width: 63px;
@@ -86,6 +101,8 @@
   place-items: center;
   color: #292929;
   cursor: pointer;
+  transition: 0.5s;
+  box-shadow: 0 0 7px rgba(0, 0, 0, 0.15);
 }
 .item span {
   font-family: " Source Sans Pro";
@@ -95,6 +112,68 @@
   letter-spacing: 0.05em;
   text-align: center;
 }
+
+.active-swatch-attribute::after {
+  content: "";
+  width: 34px;
+  height: 34px;
+  border: 1px solid #5ece7b;
+  position: absolute;
+  top: -2px;
+  left: -2px;
+}
 .active-attribute {
-  border: 10px solid red;
+  background-color: #1d1f22;
+  color: white;
+}
+.price-productScreen {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 18px;
+  letter-spacing: 0em;
+  text-align: left;
+  margin-top: 15px;
+}
+.info button {
+  height: 52px;
+  width: 292px;
+  background: #5ece7b;
+  border: none;
+  cursor: pointer;
+  color: white;
+  margin: 30px 0 40px 0;
+  box-shadow: 0 0 7px rgba(0, 0, 0, 0.3);
+  transition: 0.5s;
+}
+.info button:hover {
+  opacity: 0.9;
+}
+.description {
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+  line-height: 25.59px;
+  width: 320px;
+  height: 300px;
+  overflow-y: auto;
+  margin-bottom: 2rem;
+}
+.description ul {
+  padding: 0 1.2rem;
+}
+.description div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.description::-webkit-scrollbar {
+  width: 0.5rem;
+}
+.description::-webkit-scrollbar-track {
+  background-color: #ccc;
+  border-radius: 7px;
+}
+.description::-webkit-scrollbar-thumb {
+  background-color: #5ece7b;
+  border-radius: 7px;
 }

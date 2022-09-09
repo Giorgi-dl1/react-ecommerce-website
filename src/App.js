@@ -56,6 +56,7 @@ class App extends Component {
         label: "USD",
       },
       dropdown: false,
+      cartItems: [],
     };
   }
   setCategory = (category) => {
@@ -73,13 +74,13 @@ class App extends Component {
       "activeCurrency",
       JSON.stringify({ symbol: currency.symbol, label: currency.label })
     );
-    console.log("currency ");
   };
   setDropdown = () => {
     this.setState((state) => ({
       dropdown: !state.dropdown,
     }));
   };
+  addToCart = () => {};
   render() {
     const { data } = this.props;
     const { error, loading } = data;
@@ -120,7 +121,13 @@ class App extends Component {
                 }
               />
             ))}
-            <Route path="/product/:id" element={<ProductScreen />} />
+
+            <Route
+              path="/product/:id"
+              element={
+                <ProductScreen activeCurrency={this.state.activeCurrency} />
+              }
+            />
           </Routes>
         </div>
       </BrowserRouter>
