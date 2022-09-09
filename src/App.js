@@ -6,6 +6,7 @@ import LoadingBox from "./components/LoadingBox";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import PorductsListScreen from "./screens/PorductsListScreen";
 import ProductScreen from "./screens/ProductScreen";
+import { isEqual } from "./utils";
 
 const GET_CATEGORIES = gql`
   query {
@@ -56,15 +57,19 @@ class App extends Component {
         label: "USD",
       },
       dropdown: false,
-      cartItems: [],
+      cartItems: localStorage.getItem("cartItems")
+        ? JSON.parse(localStorage.getItem("cartItems"))
+        : [],
     };
   }
+
   setCategory = (category) => {
     this.setState({
       activeCategory: category,
     });
     localStorage.setItem("activeCategory", category);
   };
+
   setCurrency = (currency) => {
     this.setState({
       activeCurrency: currency,
@@ -75,13 +80,38 @@ class App extends Component {
       JSON.stringify({ symbol: currency.symbol, label: currency.label })
     );
   };
+
   setDropdown = () => {
     this.setState((state) => ({
       dropdown: !state.dropdown,
     }));
   };
-  addToCart = () => {};
+
+  addToCart = (product, activeAttributes, amount) => {
+    activeAttributes.image = "";
+    const existItem = this.state.cartItems?.find(
+      (item) =>
+        item.product.id === product.id &&
+        isEqual(item.activeAttributes, activeAttributes)
+    );
+
+    const quantity = existItem ? existItem.quantity + 1 : 1;
+    const updateCartItems = existItem
+      ? this.state.cartItems.map((item) =>
+          item.id === existItem.id
+            ? { product, activeAttributes, quantity }
+            : item
+        )
+      : [...this.state.cartItems, { product, activeAttributes, quantity }];
+    this.setState({
+      cartItems: updateCartItems,
+    });
+    localStorage.setItem("cartItems", JSON.stringify([]));
+  };
+
   render() {
+    console.log(this.state.cartItems);
+
     const { data } = this.props;
     const { error, loading } = data;
     return loading ? (
@@ -125,7 +155,10 @@ class App extends Component {
             <Route
               path="/product/:id"
               element={
-                <ProductScreen activeCurrency={this.state.activeCurrency} />
+                <ProductScreen
+                  activeCurrency={this.state.activeCurrency}
+                  addToCart={this.addToCart}
+                />
               }
             />
           </Routes>

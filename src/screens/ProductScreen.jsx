@@ -52,7 +52,6 @@ class ProductScreen extends PureComponent {
     let stateObject = {};
     stateObject[name] = item;
     this.setState(stateObject);
-    // console.log(this.state);
   };
   render() {
     const { data } = this.props;
@@ -60,7 +59,6 @@ class ProductScreen extends PureComponent {
     const price = product?.prices?.filter(
       (item) => item.currency.label == this.props.activeCurrency.label
     )[0];
-    console.log(this.state);
     return loading ? (
       <LoadingBox />
     ) : error ? (
@@ -113,7 +111,9 @@ class ProductScreen extends PureComponent {
             <span>{price.currency.symbol}</span>
             <span>{price.amount}</span>
           </div>
-          <button>ADD TO CART</button>
+          <button onClick={() => this.props.addToCart(product, this.state)}>
+            ADD TO CART
+          </button>
           <div className="description">
             <div dangerouslySetInnerHTML={{ __html: product.description }} />
           </div>

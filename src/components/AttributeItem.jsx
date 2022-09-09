@@ -7,7 +7,7 @@ export default class AttributeItem extends PureComponent {
     }
   }
   render() {
-    const { item, type, attributeName, setAttribute, activeAttribute, index } =
+    const { item, type, attributeName, setAttribute, activeAttribute } =
       this.props;
 
     return type === "swatch" ? (
