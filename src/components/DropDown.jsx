@@ -26,15 +26,12 @@ export default class DropDown extends PureComponent {
       this.props.setDropdown();
     }
   }
+
   render() {
     const { currencies, setDropdown, activeCurrency, dropdown } = this.props;
     return (
-      <>
-        <div
-          className="currency-dropdown"
-          onClick={setDropdown}
-          ref={this.wrapperRef}
-        >
+      <div className="currencies-div" ref={this.wrapperRef}>
+        <div className="currency-dropdown" onClick={setDropdown}>
           <div className="currency-symbol">{activeCurrency.symbol}</div>
           <div className={dropdown ? "arrow rotate" : "arrow"}>
             <img src={arrow} alt="arrow" />
@@ -44,7 +41,6 @@ export default class DropDown extends PureComponent {
           className={
             dropdown ? "currencies-cont dropdown-active" : "currencies-cont"
           }
-          ref={this.wrapperRef}
         >
           {currencies?.map((currency) => (
             <div
@@ -57,7 +53,7 @@ export default class DropDown extends PureComponent {
             </div>
           ))}
         </div>
-      </>
+      </div>
     );
   }
 }

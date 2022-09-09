@@ -6,6 +6,12 @@ import { Link } from "react-router-dom";
 import DropDown from "./DropDown";
 
 export default class Navbar extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showMinicart: false,
+    };
+  }
   render() {
     const { categories, setCategory, activeCategory } = this.props;
     return (
@@ -44,6 +50,14 @@ export default class Navbar extends Component {
           />
           <div className="cart">
             <img src={cart} alt="cart-icon" />
+
+            {this.props.cartItems.length > 0 && (
+              <div className="cart-quantity">
+                <span>
+                  {this.props.cartItems.reduce((a, c) => a + c.quantity, 0)}
+                </span>
+              </div>
+            )}
           </div>
         </div>
       </div>

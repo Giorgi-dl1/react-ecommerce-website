@@ -1,12 +1,30 @@
 import React, { PureComponent } from "react";
 import { Link } from "react-router-dom";
 import cart from "../images/cart.svg";
+import { getPrice } from "../utils";
 export default class Product extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      image: "",
+    };
+  }
+  componentDidMount() {
+    let stateObject = {};
+    // eslint-disable-next-line array-callback-return
+    this.props.product?.attributes?.map((attribute) => {
+      // eslint-disable-next-line array-callback-return
+      attribute?.items?.map((item, index) => {
+        if (index === 1) {
+          stateObject[attribute.name] = item;
+        }
+      });
+    });
+    this.setState(stateObject);
+  }
   render() {
     const { product } = this.props;
-    const price = product.prices.filter(
-      (item) => item.currency.label == this.props.activeCurrency.label
-    )[0];
+    const price = getPrice(product.prices, this.props.activeCurrency);
     return (
       <div className={product.inStock ? "product instock" : "product outstock"}>
         <div className="image-cart">
@@ -15,7 +33,10 @@ export default class Product extends PureComponent {
               <img src={product.gallery[0]} alt={product.name} />{" "}
             </div>
           </Link>
-          <div className="cart-icon">
+          <div
+            className="cart-icon"
+            onClick={() => this.props.addToCart(product, this.state)}
+          >
             <img src={cart} alt="cart-icon" />
           </div>
         </div>

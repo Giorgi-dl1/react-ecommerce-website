@@ -18,6 +18,7 @@ export default class PorductsListScreen extends Component {
               product={product}
               activeCurrency={this.props.activeCurrency}
               key={product.id}
+              addToCart={this.props.addToCart}
             />
           ))}
         </div>

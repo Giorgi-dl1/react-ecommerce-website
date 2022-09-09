@@ -87,7 +87,7 @@ class App extends Component {
     }));
   };
 
-  addToCart = (product, activeAttributes, amount) => {
+  addToCart = (product, activeAttributes, action) => {
     activeAttributes.image = "";
     const existItem = this.state.cartItems?.find(
       (item) =>
@@ -96,9 +96,11 @@ class App extends Component {
     );
 
     const quantity = existItem ? existItem.quantity + 1 : 1;
+
     const updateCartItems = existItem
       ? this.state.cartItems.map((item) =>
-          item.id === existItem.id
+          item.id === existItem.id &&
+          isEqual(item.activeAttributes, existItem.activeAttributes)
             ? { product, activeAttributes, quantity }
             : item
         )
@@ -132,6 +134,7 @@ class App extends Component {
             setCurrency={this.setCurrency}
             dropdown={this.state.dropdown}
             setDropdown={this.setDropdown}
+            cartItems={this.state.cartItems}
           />
 
           <Routes>
@@ -147,6 +150,7 @@ class App extends Component {
                     category={category.name}
                     setCategory={this.setCategory}
                     activeCurrency={this.state.activeCurrency}
+                    addToCart={this.addToCart}
                   />
                 }
               />

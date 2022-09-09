@@ -4,6 +4,7 @@ import { graphql } from "@apollo/client/react/hoc";
 import LoadingBox from "../components/LoadingBox";
 import "../styles/ProductScreen.css";
 import AttributeItem from "../components/AttributeItem";
+import { getPrice } from "../utils";
 
 const GET_PRODUCT = gql`
   query GET_PRODUCT($productId: String!) {
@@ -56,9 +57,7 @@ class ProductScreen extends PureComponent {
   render() {
     const { data } = this.props;
     const { error, loading, product } = data;
-    const price = product?.prices?.filter(
-      (item) => item.currency.label == this.props.activeCurrency.label
-    )[0];
+    const price = getPrice(product?.prices, this.props?.activeCurrency);
     return loading ? (
       <LoadingBox />
     ) : error ? (
@@ -108,11 +107,14 @@ class ProductScreen extends PureComponent {
           </div>
           <div className="label">PRICE:</div>
           <div className="price-productScreen">
-            <span>{price.currency.symbol}</span>
-            <span>{price.amount}</span>
+            <span>{price?.currency.symbol}</span>
+            <span>{price?.amount}</span>
           </div>
-          <button onClick={() => this.props.addToCart(product, this.state)}>
-            ADD TO CART
+          <button
+            onClick={() => this.props.addToCart(product, this.state)}
+            disabled={!product.inStock}
+          >
+            {product.inStock ? "ADD TO CART" : "OUT OF STOCK"}
           </button>
           <div className="description">
             <div dangerouslySetInnerHTML={{ __html: product.description }} />
