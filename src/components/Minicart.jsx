@@ -3,6 +3,7 @@ import "../styles/Minicart.css";
 import cart from "../images/cart.svg";
 import { getPrice, getTotalPrice } from "../utils";
 import AttributeItem from "./AttributeItem";
+import { Link } from "react-router-dom";
 
 export default class Minicart extends PureComponent {
   constructor(props) {
@@ -136,13 +137,16 @@ export default class Minicart extends PureComponent {
                   </span>
                 </div>
                 <div className="actions">
-                  <button className="view-bag">VIEW BAG</button>
+                  <Link to="/cart" onClick={toggleMinicart}>
+                    <button className="view-bag">VIEW BAG</button>
+                  </Link>
+
                   <button className="check-out">CHECK OUT</button>
                 </div>
               </div>
             </div>
           ) : (
-            <div>cart empty</div>
+            <div className="cart-empty">Cart is empty</div>
           )}
         </div>
       </div>

@@ -120,6 +120,9 @@
   padding: 13px;
   cursor: pointer;
 }
+.actions a {
+  width: 100%;
+}
 .view-bag {
   background-color: #ffffff;
   border: 1px solid #1d1f22;
@@ -128,4 +131,14 @@
   background-color: #5ece7b;
   color: white;
   border: none;
+}
+.cart-empty {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-content: center;
+  font-size: 25px;
+}
+.minicart-attribute-items {
+  gap: 8px;
 }

@@ -54,18 +54,18 @@
   position: relative;
 }
 .cart-icon {
-  width: 50px;
-  height: 50px;
+  width: 0;
+  height: 0;
   background-color: #5ece7b;
   border-radius: 50%;
-
   place-content: center;
   cursor: pointer;
   position: absolute;
   right: 1rem;
   bottom: -20px;
   transition: 0.5s;
-  display: none;
+  display: grid;
+  overflow: hidden;
 }
 .cart-icon:hover {
   background-color: #74df91;
@@ -76,7 +76,8 @@
 }
 
 .product.instock:hover .image-cart .cart-icon {
-  display: grid;
+  width: 50px;
+  height: 50px;
 }
 .outstock .image-cart .image::after {
   content: "OUT OF STOCK";

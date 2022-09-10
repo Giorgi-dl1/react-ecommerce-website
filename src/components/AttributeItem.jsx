@@ -16,7 +16,8 @@ export default class AttributeItem extends PureComponent {
           width: index === "minicart" ? 16 : 32,
           height: index === "minicart" ? 16 : 32,
           backgroundColor: item.value,
-          cursor: index === "minicart" ? "default" : "pointer",
+          cursor:
+            index === "minicart" || index === "cart" ? "default" : "pointer",
           boxShadow: "0 0 10px rgba(0, 0, 0, 0.2)",
           transition: ".5s",
           position: "relative",
@@ -47,6 +48,9 @@ export default class AttributeItem extends PureComponent {
             ? "item minicart-item"
             : "item"
         }
+        style={{
+          cursor: index === "cart" && "default",
+        }}
         key={item.id}
         onClick={
           index !== "minicart" && index !== "cart"

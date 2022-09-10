@@ -32,3 +32,8 @@ export const getTotalPrice = (items, activeCurrency) => {
   });
   return Math.round(totalPrice * 100 + Number.EPSILON) / 100;
 };
+
+export const countTax = (number) => {
+  let tax = (number * 21) / 100;
+  return Math.round(tax * 100 + Number.EPSILON) / 100;
+};

@@ -1,19 +1,64 @@
+import { gql } from "@apollo/client";
+import { graphql } from "@apollo/client/react/hoc";
 import React, { Component } from "react";
+import LoadingBox from "../components/LoadingBox";
 import Product from "../components/Product";
 import "../styles/PorductsListScreen.css";
-import { Link } from "react-router-dom";
-export default class PorductsListScreen extends Component {
-  componentDidMount() {
-    this.props.setCategory(this.props.category);
+
+const GET_PRODUCTS = gql`
+  query GET_PRODUCTS($title: String!) {
+    category(input: { title: $title }) {
+      name
+      products {
+        name
+        id
+        inStock
+        gallery
+        description
+        brand
+        category
+        attributes {
+          name
+          id
+          type
+          items {
+            displayValue
+            value
+            id
+          }
+        }
+        prices {
+          currency {
+            label
+            symbol
+          }
+          amount
+        }
+        brand
+      }
+    }
   }
+`;
+class PorductsListScreen extends Component {
+  // componentDidMount() {
+  //   this.props.setCategory(this.props.data.name);
+  // }
   render() {
-    return (
+    const { data } = this.props;
+    const { loading, error, category } = data;
+    console.log(category);
+    return loading ? (
+      <LoadingBox />
+    ) : error ? (
+      <div className="error">{error.message}</div>
+    ) : (
       <div>
         <p style={{ fontWeight: 400, fontSize: 42, margin: "5rem 0" }}>
-          {this.props.category}
+          {category.name}
         </p>
+
         <div className="product-list">
-          {this.props.products.map((product) => (
+          {category.products.map((product) => (
             <Product
               product={product}
               activeCurrency={this.props.activeCurrency}
@@ -26,3 +71,11 @@ export default class PorductsListScreen extends Component {
     );
   }
 }
+
+export default graphql(GET_PRODUCTS, {
+  options: (props) => ({
+    variables: {
+      title: window.location.href.split("/")[4] || "all",
+    },
+  }),
+})(PorductsListScreen);

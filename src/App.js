@@ -7,6 +7,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import PorductsListScreen from "./screens/PorductsListScreen";
 import ProductScreen from "./screens/ProductScreen";
 import { isEqual } from "./utils";
+import CartScreen from "./screens/CartScreen";
 
 const GET_CATEGORIES = gql`
   query {
@@ -138,6 +139,8 @@ class App extends Component {
       this.setState({
         cartItems: updateCartItems,
       });
+      localStorage.setItem("cartItems", JSON.stringify(updateCartItems));
+
       return;
     }
     const updateCartItems =
@@ -159,7 +162,7 @@ class App extends Component {
     this.setState({
       cartItems: updateCartItems,
     });
-    localStorage.setItem("cartItems", JSON.stringify([]));
+    localStorage.setItem("cartItems", JSON.stringify(updateCartItems));
   };
 
   render() {
@@ -190,24 +193,37 @@ class App extends Component {
           />
           <div className={this.state.showMinicart ? "background" : ""}>
             <Routes>
-              {data?.categories?.map((category) => (
-                <Route
-                  key={category.name}
-                  path={
-                    category.name === "all" ? "/" : `/category/${category.name}`
-                  }
-                  element={
-                    <PorductsListScreen
-                      products={category.products}
-                      category={category.name}
-                      setCategory={this.setCategory}
-                      activeCurrency={this.state.activeCurrency}
-                      addToCart={this.addToCart}
-                    />
-                  }
-                />
-              ))}
+              <Route
+                path="/"
+                element={
+                  <PorductsListScreen
+                    setCategory={this.setCategory}
+                    activeCurrency={this.state.activeCurrency}
+                    addToCart={this.addToCart}
+                  />
+                }
+              />
+              <Route
+                path="/category/:category"
+                element={
+                  <PorductsListScreen
+                    setCategory={this.setCategory}
+                    activeCurrency={this.state.activeCurrency}
+                    addToCart={this.addToCart}
+                  />
+                }
+              />
 
+              <Route
+                path="/cart"
+                element={
+                  <CartScreen
+                    cartItems={this.state.cartItems}
+                    activeCurrency={this.state.activeCurrency}
+                    addToCart={this.addToCart}
+                  />
+                }
+              />
               <Route
                 path="/product/:id"
                 element={

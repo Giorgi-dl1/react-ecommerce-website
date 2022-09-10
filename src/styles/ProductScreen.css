@@ -16,7 +16,7 @@
 .thumbnails {
   overflow: hidden;
   overflow-y: auto;
-  height: 511px;
+  height: 530px;
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -42,7 +42,7 @@
 .main-image {
   overflow: hidden;
   width: 610px;
-  height: 511px;
+  height: 530px;
 }
 .main-image img {
   width: 100%;
@@ -58,7 +58,7 @@
 }
 .brand {
   font-weight: 600;
-  margin-bottom: 14px;
+  margin-bottom: 5px;
 }
 .product-name,
 .brand {
@@ -76,9 +76,7 @@
   max-width: 500px;
   flex-wrap: wrap;
 }
-.minicart-attribute-items {
-  gap: 8px;
-}
+
 .label {
   margin-bottom: 8px;
   font-family: "Roboto Condensed", sans-serif;
