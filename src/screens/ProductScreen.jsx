@@ -65,7 +65,7 @@ class ProductScreen extends PureComponent {
     ) : (
       <div className="productsreen">
         <div className="gallery">
-          <div className="thumbnails">
+          <div className="thumbnails styled-scrollbar">
             {product?.gallery?.map((item) => (
               <div
                 className="thumbnail"
@@ -116,7 +116,7 @@ class ProductScreen extends PureComponent {
           >
             {product.inStock ? "ADD TO CART" : "OUT OF STOCK"}
           </button>
-          <div className="description">
+          <div className="description styled-scrollbar">
             <div dangerouslySetInnerHTML={{ __html: product.description }} />
           </div>
         </div>

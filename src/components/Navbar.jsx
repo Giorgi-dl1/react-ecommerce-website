@@ -48,6 +48,7 @@ export default class Navbar extends Component {
             toggleMinicart={this.props.toggleMinicart}
             cartItems={this.props.cartItems}
             activeCurrency={this.props.activeCurrency}
+            addToCart={this.props.addToCart}
           />
         </div>
       </div>

@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import "../styles/Minicart.css";
 import cart from "../images/cart.svg";
-import { getPrice } from "../utils";
+import { getPrice, getTotalPrice } from "../utils";
 import AttributeItem from "./AttributeItem";
 
 export default class Minicart extends PureComponent {
@@ -30,10 +30,15 @@ export default class Minicart extends PureComponent {
     }
   }
   render() {
-    const { cartItems, toggleMinicart, showMinicart, activeCurrency } =
-      this.props;
+    const {
+      cartItems,
+      toggleMinicart,
+      showMinicart,
+      activeCurrency,
+      addToCart,
+    } = this.props;
     const totalQuantity = cartItems?.reduce((a, c) => a + c.quantity, 0);
-    console.log(cartItems);
+    const totalPrice = getTotalPrice(cartItems, activeCurrency);
     return (
       <div className="cart" ref={this.wrapperRef}>
         <div className="nav__cart-icon" onClick={toggleMinicart}>
@@ -52,11 +57,11 @@ export default class Minicart extends PureComponent {
                 <span className="bag">My Bag, </span>
                 <span>{totalQuantity} items</span>
               </div>
-              <div className="minicart-products">
-                {cartItems.map((item) => {
+              <div className="minicart-products styled-scrollbar">
+                {cartItems.map((item, index) => {
                   const price = getPrice(item.product.prices, activeCurrency);
                   return (
-                    <div className="minicart-product" key={item.product.id}>
+                    <div className="minicart-product" key={index}>
                       <div className="minicart-product-info">
                         <div className="brand-name">
                           <div>{item.product.brand}</div>
@@ -90,9 +95,50 @@ export default class Minicart extends PureComponent {
                           ))}
                         </div>
                       </div>
+                      <div className="quantity-control_image">
+                        <div className="quantity-control">
+                          <button
+                            className="plus"
+                            onClick={() =>
+                              addToCart(item.product, item?.activeAttributes)
+                            }
+                          >
+                            +
+                          </button>
+                          <div className="quantity">{item.quantity}</div>
+                          <button
+                            className="minus"
+                            onClick={() =>
+                              addToCart(
+                                item.product,
+                                item.activeAttributes,
+                                "decrease"
+                              )
+                            }
+                          >
+                            -
+                          </button>
+                        </div>
+                        <div className="minicart-image">
+                          <img src={item.product.gallery[0]} alt="" />
+                        </div>
+                      </div>
                     </div>
                   );
                 })}
+              </div>
+              <div className="minicart-bottom">
+                <div className="minicart-total">
+                  <span>Total</span>
+                  <span className="price">
+                    {activeCurrency.symbol}
+                    {totalPrice}
+                  </span>
+                </div>
+                <div className="actions">
+                  <button className="view-bag">VIEW BAG</button>
+                  <button className="check-out">CHECK OUT</button>
+                </div>
               </div>
             </div>
           ) : (

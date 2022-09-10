@@ -93,23 +93,69 @@ class App extends Component {
   };
 
   addToCart = (product, activeAttributes, action) => {
-    activeAttributes.image = "";
-    const existItem = this.state.cartItems?.find(
-      (item) =>
-        item.product.id === product.id &&
-        isEqual(item.activeAttributes, activeAttributes)
-    );
+    if (activeAttributes) {
+      const checkAttributes = Object.getOwnPropertyNames(activeAttributes);
+      if (checkAttributes.length <= 1) {
+        activeAttributes = null;
+      }
+    }
 
-    const quantity = existItem ? existItem.quantity + 1 : 1;
-
-    const updateCartItems = existItem
-      ? this.state.cartItems.map((item) =>
-          item.id === existItem.id &&
-          isEqual(item.activeAttributes, existItem.activeAttributes)
-            ? { product, activeAttributes, quantity }
-            : item
-        )
-      : [...this.state.cartItems, { product, activeAttributes, quantity }];
+    if (activeAttributes) {
+      activeAttributes.image = "";
+    }
+    const existItem = this.state.cartItems?.find((item) => {
+      if (activeAttributes) {
+        return (
+          item.product.id === product.id &&
+          isEqual(item.activeAttributes, activeAttributes)
+        );
+      } else {
+        return item.product.id === product.id;
+      }
+    });
+    console.log(existItem);
+    const quantity =
+      existItem && action === "decrease"
+        ? existItem.quantity - 1
+        : existItem
+        ? existItem.quantity + 1
+        : 1;
+    if (quantity < 1) {
+      const updateCartItems = activeAttributes
+        ? this.state.cartItems.filter((item) => {
+            if (
+              item.product.id === existItem.product.id &&
+              isEqual(item.activeAttributes, existItem.activeAttributes)
+            ) {
+              return false;
+            } else {
+              return true;
+            }
+          })
+        : this.state.cartItems.filter(
+            (item) => item.product.id !== existItem.product.id
+          );
+      this.setState({
+        cartItems: updateCartItems,
+      });
+      return;
+    }
+    const updateCartItems =
+      existItem && activeAttributes
+        ? this.state.cartItems.map((item) =>
+            item.product.id === existItem.product.id &&
+            isEqual(item.activeAttributes, existItem.activeAttributes)
+              ? { product, activeAttributes, quantity }
+              : item
+          )
+        : existItem
+        ? this.state.cartItems.map((item) =>
+            item.product.id === existItem.product.id
+              ? { product, activeAttributes, quantity }
+              : item
+          )
+        : [...this.state.cartItems, { product, activeAttributes, quantity }];
+    console.log(updateCartItems);
     this.setState({
       cartItems: updateCartItems,
     });
@@ -140,6 +186,7 @@ class App extends Component {
             cartItems={this.state.cartItems}
             showMinicart={this.state.showMinicart}
             toggleMinicart={this.toggleMinicart}
+            addToCart={this.addToCart}
           />
           <div className={this.state.showMinicart ? "background" : ""}>
             <Routes>
