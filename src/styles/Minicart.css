@@ -11,16 +11,7 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.144);
   padding-left: 16px;
 }
-.background::after {
-  content: "";
-  background-color: #39374838;
-  position: absolute;
-  top: 84px;
-  left: -3rem;
-  right: -3rem;
-  bottom: 0;
-  z-index: 2;
-}
+
 .header {
   margin: 32px 0;
 

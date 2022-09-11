@@ -37,7 +37,7 @@ export default class CartScreen extends PureComponent {
                       </div>
                       <div className="cart-attributes">
                         {item?.product?.attributes?.map((attribute) => (
-                          <div className="attribute" key={attribute.name}>
+                          <div className="cart-attribute" key={attribute.name}>
                             <div className="label">{attribute.name}:</div>
                             <div className="attribute-items ">
                               {attribute?.items?.map((attributeItem) => (

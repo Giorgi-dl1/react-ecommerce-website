@@ -3,6 +3,9 @@
 }
 .cart-attributes {
   margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 .cart_b.plus,
 .cart_b.minus {

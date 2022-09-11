@@ -54,7 +54,7 @@
   transition: 1s ease;
 }
 .main-image img:hover {
-  transform: scale(1.5);
+  transform: scale(1.8);
 }
 .brand {
   font-weight: 600;

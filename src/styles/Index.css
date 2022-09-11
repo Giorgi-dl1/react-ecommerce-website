@@ -11,7 +11,7 @@ body {
   font-family: "Raleway", sans-serif;
 }
 .app {
-  margin: 0 3rem;
+  margin: 0 100px;
   position: relative;
 }
 
@@ -37,4 +37,23 @@ a {
 .styled-scrollbar::-webkit-scrollbar-thumb {
   background-color: #5ece7b;
   border-radius: 7px;
+}
+.background::after {
+  content: "";
+  background-color: #39374838;
+  position: absolute;
+  top: 84px;
+  left: -100px;
+  right: -100px;
+  bottom: 0;
+  z-index: 2;
+}
+@media (max-width: 1024px) {
+  .app {
+    margin: 0 3rem;
+  }
+  .background::after {
+    left: -3rem;
+    right: -3rem;
+  }
 }

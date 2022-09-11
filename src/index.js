@@ -1,14 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
-import {
-  ApolloClient,
-  ApolloProvider,
-  InMemoryCache,
-  DefaultOptions,
-} from "@apollo/client";
+import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import "./styles/Index.css";
-const defaultOptions: DefaultOptions = {
+const defaultOptions = {
   watchQuery: {
     fetchPolicy: "no-cache",
     errorPolicy: "ignore",
