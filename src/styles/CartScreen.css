@@ -12,6 +12,7 @@
 .cart-image {
   width: 200px;
   height: 228px;
+  position: relative;
 }
 .cart-image img {
   width: 100%;
@@ -23,6 +24,7 @@
 }
 .cart-b.quantity-control {
   height: 228px;
+  margin-right: 0.4rem;
 }
 .cart-b.minicart-product {
   border-top: 1px solid #e5e5e5;
@@ -63,4 +65,24 @@
   place-content: center;
   min-height: 100vh;
   font-size: 3rem;
+}
+.arrows {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  display: flex;
+  gap: 8px;
+}
+.cart-arrow {
+  width: 24px;
+  height: 24px;
+  background-color: #000000ba;
+  cursor: pointer;
+}
+
+.arrow-left img {
+  transform: rotate(270deg);
+}
+.arrow-right img {
+  transform: rotate(90deg);
 }

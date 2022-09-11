@@ -2,6 +2,8 @@ import { PureComponent } from "react";
 import { countTax, getPrice, getTotalPrice } from "../utils.js";
 import "../styles/CartScreen.css";
 import AttributeItem from "../components/AttributeItem";
+import CartGallery from "../components/CartGallery.jsx";
+import { Link } from "react-router-dom";
 export default class CartScreen extends PureComponent {
   render() {
     const { cartItems, activeCurrency, addToCart } = this.props;
@@ -23,7 +25,11 @@ export default class CartScreen extends PureComponent {
                     <div className="minicart-product-info">
                       <div>
                         <div className="brand">{item.product.brand}</div>
-                        <div className="product-name">{item.product.name}</div>
+                        <div className="product-name">
+                          <Link to={`/product/${item.product.id}`}>
+                            {item.product.name}
+                          </Link>
+                        </div>
                       </div>
                       <div className="price-productScreen">
                         <span>{price.currency.symbol}</span>
@@ -75,9 +81,7 @@ export default class CartScreen extends PureComponent {
                           -
                         </button>
                       </div>
-                      <div className="cart-image">
-                        <img src={item.product.gallery[0]} alt="" />
-                      </div>
+                      <CartGallery gallery={item.product.gallery} />
                     </div>
                   </div>
                 );

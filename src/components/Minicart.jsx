@@ -66,7 +66,14 @@ export default class Minicart extends PureComponent {
                       <div className="minicart-product-info">
                         <div className="brand-name">
                           <div>{item.product.brand}</div>
-                          <div>{item.product.name}</div>
+                          <div>
+                            <Link
+                              to={`/product/${item.product.id}`}
+                              onClick={showMinicart && toggleMinicart}
+                            >
+                              {item.product.name}
+                            </Link>
+                          </div>
                         </div>
                         <div className="minicart-price">
                           <span>{price.currency.symbol}</span>
@@ -74,7 +81,7 @@ export default class Minicart extends PureComponent {
                         </div>
                         <div className="minicart-attributes">
                           {item?.product?.attributes?.map((attribute) => (
-                            <div className="attribute" key={attribute.name}>
+                            <div key={attribute.name}>
                               <div className="minicart-label">
                                 {attribute.name}:
                               </div>
@@ -137,7 +144,7 @@ export default class Minicart extends PureComponent {
                   </span>
                 </div>
                 <div className="actions">
-                  <Link to="/cart" onClick={toggleMinicart}>
+                  <Link to="/cart" onClick={showMinicart && toggleMinicart}>
                     <button className="view-bag">VIEW BAG</button>
                   </Link>
 
