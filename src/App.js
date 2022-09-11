@@ -8,6 +8,7 @@ import PorductsListScreen from "./screens/PorductsListScreen";
 import ProductScreen from "./screens/ProductScreen";
 import { isEqual } from "./utils";
 import CartScreen from "./screens/CartScreen";
+import NoMatch from "./components/NoMatch";
 
 const GET_CATEGORIES = gql`
   query {
@@ -231,6 +232,7 @@ class App extends Component {
                   />
                 }
               />
+              <Route path="*" element={<NoMatch />} />
             </Routes>
           </div>
         </div>

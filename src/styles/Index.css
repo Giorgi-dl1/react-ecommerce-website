@@ -48,6 +48,12 @@ a {
   bottom: 0;
   z-index: 2;
 }
+.content-center {
+  display: grid;
+  place-content: center;
+  min-height: 100vh;
+  font-size: 3rem;
+}
 @media (max-width: 1024px) {
   .app {
     margin: 0 3rem;

@@ -63,12 +63,7 @@
   color: white;
   cursor: pointer;
 }
-.cartscreen-empty {
-  display: grid;
-  place-content: center;
-  min-height: 100vh;
-  font-size: 3rem;
-}
+
 .arrows {
   position: absolute;
   right: 16px;
