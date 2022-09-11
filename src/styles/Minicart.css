@@ -6,7 +6,7 @@
   right: -20px;
   top: 54px;
   z-index: 10;
-  transition: 1s;
+  transition: 0.5s;
   background-color: white;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.144);
   padding-left: 16px;
@@ -53,7 +53,7 @@
 }
 .minicart-product {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
 }
 .quantity-control_image {

@@ -16,7 +16,7 @@ export const isEqual = (obj1, obj2) => {
 
 export const getPrice = (prices, activeCurrency) => {
   const price = prices?.filter(
-    (item) => item.currency.label == activeCurrency.label
+    (item) => item.currency.label === activeCurrency.label
   )[0];
   return price;
 };
@@ -25,7 +25,7 @@ export const getTotalPrice = (items, activeCurrency) => {
   let totalPrice = 0;
   items.map((item) => {
     item.product.prices.map((price) => {
-      if (price.currency.label == activeCurrency.label) {
+      if (price.currency.label === activeCurrency.label) {
         totalPrice += price.amount * item.quantity;
       }
     });

@@ -53,10 +53,10 @@
   padding: 13px 0;
   font-size: 14px;
   border: none;
-  cursor: pointer;
   background-color: #5ece7b;
   margin-top: 12px;
   color: white;
+  cursor: pointer;
 }
 .cartscreen-empty {
   display: grid;

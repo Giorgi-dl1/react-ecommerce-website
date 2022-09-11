@@ -40,13 +40,13 @@ const GET_PRODUCTS = gql`
   }
 `;
 class PorductsListScreen extends Component {
-  // componentDidMount() {
-  //   this.props.setCategory(this.props.data.name);
-  // }
+  componentDidMount() {
+    this.props.setCategory(window.location.href.split("/")[4] || "all");
+  }
   render() {
     const { data } = this.props;
     const { loading, error, category } = data;
-    console.log(category);
+    // this.componentDidMount();
     return loading ? (
       <LoadingBox />
     ) : error ? (
