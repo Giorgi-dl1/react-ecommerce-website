@@ -46,7 +46,6 @@ class PorductsListScreen extends Component {
   render() {
     const { data } = this.props;
     const { loading, error, category } = data;
-    // this.componentDidMount();
     return loading ? (
       <LoadingBox />
     ) : error ? (

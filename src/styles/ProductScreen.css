@@ -175,3 +175,6 @@
   flex-direction: column;
   gap: 0.5rem;
 }
+.description div h1 {
+  line-height: 30px;
+}
