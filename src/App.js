@@ -114,7 +114,6 @@ class App extends Component {
         return item.product.id === product.id;
       }
     });
-    console.log(existItem);
     const quantity =
       existItem && action === "decrease"
         ? existItem.quantity - 1
@@ -158,7 +157,6 @@ class App extends Component {
               : item
           )
         : [...this.state.cartItems, { product, activeAttributes, quantity }];
-    console.log(updateCartItems);
     this.setState({
       cartItems: updateCartItems,
     });

@@ -110,7 +110,14 @@ export default class CartScreen extends PureComponent {
             </div>
           </div>
         ) : (
-          <div className="cartscreen-empty">Cart is empty</div>
+          <div className="cartscreen-empty">
+            <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+              <span>Cart is empty.</span>
+              <Link to="/">
+                <strong style={{ color: "#5ece7b" }}>Go shopping</strong>
+              </Link>
+            </div>
+          </div>
         )}
       </div>
     );
