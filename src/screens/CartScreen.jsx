@@ -21,7 +21,10 @@ export default class CartScreen extends PureComponent {
               {cartItems.map((item, index) => {
                 const price = getPrice(item.product.prices, activeCurrency);
                 return (
-                  <div className="cart-b minicart-product" key={index}>
+                  <div
+                    className="cart-b minicart-product"
+                    key={item.product.id + index}
+                  >
                     <div className="minicart-product-info">
                       <div>
                         <div className="brand">{item.product.brand}</div>
