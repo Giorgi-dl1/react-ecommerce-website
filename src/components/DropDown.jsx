@@ -1,7 +1,17 @@
+import { gql } from "@apollo/client";
 import React, { PureComponent } from "react";
 import arrow from "../images/arrow-down.svg";
+import { graphql } from "@apollo/client/react/hoc";
 
-export default class DropDown extends PureComponent {
+const GET_CURRENCIES = gql`
+  query {
+    currencies {
+      label
+      symbol
+    }
+  }
+`;
+class DropDown extends PureComponent {
   constructor(props) {
     super(props);
 
@@ -28,7 +38,8 @@ export default class DropDown extends PureComponent {
   }
 
   render() {
-    const { currencies, setDropdown, activeCurrency, dropdown } = this.props;
+    const { currencies } = this.props.data;
+    const { setDropdown, activeCurrency, dropdown } = this.props;
     return (
       <div className="currencies-div" ref={this.wrapperRef}>
         <div className="currency-dropdown" onClick={setDropdown}>
@@ -57,3 +68,5 @@ export default class DropDown extends PureComponent {
     );
   }
 }
+
+export default graphql(GET_CURRENCIES)(DropDown);

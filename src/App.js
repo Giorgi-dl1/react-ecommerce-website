@@ -15,10 +15,6 @@ const GET_CATEGORIES = gql`
     categories {
       name
     }
-    currencies {
-      label
-      symbol
-    }
   }
 `;
 
@@ -124,8 +120,7 @@ class App extends Component {
   };
 
   render() {
-    const { data } = this.props;
-    const { error, loading } = data;
+    const { error, loading, categories } = this.props.data;
     return loading ? (
       <LoadingBox />
     ) : error ? (
@@ -137,8 +132,7 @@ class App extends Component {
         <div className="app ">
           <div className="wrapper">
             <Navbar
-              categories={data.categories}
-              currencies={data.currencies}
+              categories={categories}
               activeCategory={this.state.activeCategory}
               setCategory={this.setCategory}
               activeCurrency={this.state.activeCurrency}
