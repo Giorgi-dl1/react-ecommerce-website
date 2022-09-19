@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 import { graphql } from "@apollo/client/react/hoc";
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import LoadingBox from "../components/LoadingBox";
 import Product from "../components/Product";
 import "../styles/PorductsListScreen.css";
@@ -39,7 +39,7 @@ const GET_PRODUCTS = gql`
     }
   }
 `;
-class PorductsListScreen extends Component {
+class PorductsListScreen extends PureComponent {
   componentDidMount() {
     this.props.setCategory(window.location.href.split("/")[4] || "all");
   }

@@ -1,5 +1,5 @@
 import { gql } from "@apollo/client";
-import { PureComponent } from "react";
+import React, { PureComponent } from "react";
 import { graphql } from "@apollo/client/react/hoc";
 import LoadingBox from "../components/LoadingBox";
 import "../styles/ProductScreen.css";
@@ -40,6 +40,7 @@ const GET_PRODUCT = gql`
 class ProductScreen extends PureComponent {
   constructor(props) {
     super(props);
+    this.descriptionRef = React.createRef();
     this.state = {
       image: "",
       showMessage: false,
@@ -60,6 +61,10 @@ class ProductScreen extends PureComponent {
   };
   componentDidMount() {
     window.scrollTo(0, 0);
+  }
+  componentDidUpdate() {
+    this.descriptionRef.current.innerHTML =
+      this.props?.data?.product.description;
   }
   render() {
     const { data } = this.props;
@@ -120,7 +125,7 @@ class ProductScreen extends PureComponent {
                 {this.state.showMessage &&
                   !this.state.activeAttributes[attribute.name] && (
                     <div style={{ color: "red", fontSize: 14, marginTop: 10 }}>
-                      please select {attribute.name}
+                      please select "{attribute.name.toLowerCase()}"
                     </div>
                   )}
               </div>
@@ -133,18 +138,16 @@ class ProductScreen extends PureComponent {
           </div>
           <button
             onClick={() =>
-              attributesLength == activeAttributesLength
+              attributesLength === activeAttributesLength
                 ? this.props.addToCart(product, this.state.activeAttributes)
-                : this.setState((prevState) => {
-                    return { showMessage: !prevState.showMessage };
-                  })
+                : this.setState({ showMessage: true })
             }
             disabled={!product.inStock}
           >
             {product.inStock ? "ADD TO CART" : "OUT OF STOCK"}
           </button>
           <div className="description styled-scrollbar">
-            <div dangerouslySetInnerHTML={{ __html: product.description }} />
+            <div ref={this.descriptionRef} />
           </div>
         </div>
       </div>

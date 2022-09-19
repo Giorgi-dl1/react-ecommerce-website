@@ -23,7 +23,9 @@ export const getPrice = (prices, activeCurrency) => {
 
 export const getTotalPrice = (items, activeCurrency) => {
   let totalPrice = 0;
+  // eslint-disable-next-line array-callback-return
   items.map((item) => {
+    // eslint-disable-next-line array-callback-return
     item.product.prices.map((price) => {
       if (price.currency.label === activeCurrency.label) {
         totalPrice += price.amount * item.quantity;
