@@ -5,6 +5,7 @@ import LoadingBox from "../components/LoadingBox";
 import "../styles/ProductScreen.css";
 import AttributeItem from "../components/AttributeItem";
 import { getPrice } from "../utils";
+import DOMPurify from "dompurify";
 
 const GET_PRODUCT = gql`
   query GET_PRODUCT($productId: String!) {
@@ -63,8 +64,8 @@ class ProductScreen extends PureComponent {
     window.scrollTo(0, 0);
   }
   componentDidUpdate() {
-    this.descriptionRef.current.innerHTML =
-      this.props?.data?.product.description;
+    const html = this.props?.data?.product.description;
+    this.descriptionRef.current.innerHTML = DOMPurify.sanitize(html);
   }
   render() {
     const { data } = this.props;
@@ -125,7 +126,7 @@ class ProductScreen extends PureComponent {
                 {this.state.showMessage &&
                   !this.state.activeAttributes[attribute.name] && (
                     <div style={{ color: "red", fontSize: 14, marginTop: 10 }}>
-                      please select "{attribute.name}"
+                      Please select "{attribute.name}"
                     </div>
                   )}
               </div>
