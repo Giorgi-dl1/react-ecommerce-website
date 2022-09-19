@@ -68,16 +68,6 @@ class App extends Component {
   };
 
   addToCart = (product, activeAttributes, action) => {
-    if (activeAttributes) {
-      const checkAttributes = Object.getOwnPropertyNames(activeAttributes);
-      if (checkAttributes.length <= 1) {
-        activeAttributes = null;
-      }
-    }
-
-    if (activeAttributes) {
-      activeAttributes.image = "";
-    }
     const existItem = this.state.cartItems?.find((item) => {
       return activeAttributes
         ? item.product.id === product.id &&

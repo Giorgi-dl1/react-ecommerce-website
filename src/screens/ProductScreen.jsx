@@ -42,6 +42,8 @@ class ProductScreen extends PureComponent {
     super(props);
     this.state = {
       image: "",
+      showMessage: false,
+      activeAttributes: {},
     };
   }
   setImage = (data) => {
@@ -50,9 +52,11 @@ class ProductScreen extends PureComponent {
     });
   };
   setAttribute = (name, item) => {
-    let stateObject = {};
-    stateObject[name] = item;
-    this.setState(stateObject);
+    this.setState((prevState) => {
+      let activeAttributes = Object.assign({}, prevState.activeAttributes);
+      activeAttributes[name] = item;
+      return { activeAttributes };
+    });
   };
   componentDidMount() {
     window.scrollTo(0, 0);
@@ -61,6 +65,11 @@ class ProductScreen extends PureComponent {
     const { data } = this.props;
     const { error, loading, product } = data;
     const price = getPrice(product?.prices, this.props?.activeCurrency);
+
+    const activeAttributesLength = Object.getOwnPropertyNames(
+      this.state.activeAttributes
+    ).length;
+    const attributesLength = product?.attributes.length;
     return loading ? (
       <LoadingBox />
     ) : error ? (
@@ -99,12 +108,21 @@ class ProductScreen extends PureComponent {
                         attributeName={attribute.name}
                         setAttribute={this.setAttribute}
                         key={item.id}
-                        activeAttribute={this.state[attribute.name]}
+                        activeAttribute={
+                          this.state.activeAttributes[attribute.name]
+                        }
                         index={index}
+                        showMessage={this.state.showMessage}
                       />
                     );
                   })}
                 </div>
+                {this.state.showMessage &&
+                  !this.state.activeAttributes[attribute.name] && (
+                    <div style={{ color: "red", fontSize: 14, marginTop: 10 }}>
+                      please select {attribute.name}
+                    </div>
+                  )}
               </div>
             ))}
           </div>
@@ -114,7 +132,13 @@ class ProductScreen extends PureComponent {
             <span>{price?.amount}</span>
           </div>
           <button
-            onClick={() => this.props.addToCart(product, this.state)}
+            onClick={() =>
+              attributesLength == activeAttributesLength
+                ? this.props.addToCart(product, this.state.activeAttributes)
+                : this.setState((prevState) => {
+                    return { showMessage: !prevState.showMessage };
+                  })
+            }
             disabled={!product.inStock}
           >
             {product.inStock ? "ADD TO CART" : "OUT OF STOCK"}

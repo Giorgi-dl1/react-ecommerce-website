@@ -1,11 +1,6 @@
 import { PureComponent } from "react";
 
 export default class AttributeItem extends PureComponent {
-  componentDidMount() {
-    if (this.props.index === 1) {
-      this.props.setAttribute(this.props.attributeName, this.props.item);
-    }
-  }
   render() {
     const { item, type, attributeName, setAttribute, activeAttribute, index } =
       this.props;
@@ -38,28 +33,30 @@ export default class AttributeItem extends PureComponent {
         }
       ></div>
     ) : (
-      <div
-        className={
-          activeAttribute?.id === item.id && index === "minicart"
-            ? "active-attribute item minicart-item"
-            : activeAttribute?.id === item.id
-            ? "active-attribute item"
-            : index === "minicart"
-            ? "item minicart-item"
-            : "item"
-        }
-        style={{
-          cursor: index === "cart" && "default",
-        }}
-        key={item.id}
-        onClick={
-          index !== "minicart" && index !== "cart"
-            ? () => setAttribute(attributeName, item)
-            : null
-        }
-      >
-        <span>{item.value}</span>
-      </div>
+      <>
+        <div
+          className={
+            activeAttribute?.id === item.id && index === "minicart"
+              ? "active-attribute item minicart-item"
+              : activeAttribute?.id === item.id
+              ? "active-attribute item"
+              : index === "minicart"
+              ? "item minicart-item"
+              : "item"
+          }
+          style={{
+            cursor: index === "cart" && "default",
+          }}
+          key={item.id}
+          onClick={
+            index !== "minicart" && index !== "cart"
+              ? () => setAttribute(attributeName, item)
+              : null
+          }
+        >
+          <span>{item.value}</span>
+        </div>
+      </>
     );
   }
 }
