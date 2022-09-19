@@ -1,10 +1,12 @@
 .product-list {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-evenly;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(356px, 1fr));
   gap: 100px 40px;
   padding-bottom: 3rem;
+}
+.grid-child {
+  display: flex;
+  justify-content: center;
 }
 
 .product {

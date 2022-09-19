@@ -14,33 +14,6 @@ const GET_CATEGORIES = gql`
   query {
     categories {
       name
-      products {
-        name
-        id
-        inStock
-        gallery
-        description
-        brand
-        category
-        attributes {
-          name
-          id
-          type
-          items {
-            displayValue
-            value
-            id
-          }
-        }
-        prices {
-          currency {
-            label
-            symbol
-          }
-          amount
-        }
-        brand
-      }
     }
     currencies {
       label
@@ -106,14 +79,10 @@ class App extends Component {
       activeAttributes.image = "";
     }
     const existItem = this.state.cartItems?.find((item) => {
-      if (activeAttributes) {
-        return (
-          item.product.id === product.id &&
-          isEqual(item.activeAttributes, activeAttributes)
-        );
-      } else {
-        return item.product.id === product.id;
-      }
+      return activeAttributes
+        ? item.product.id === product.id &&
+            isEqual(item.activeAttributes, activeAttributes)
+        : item.product.id === product.id;
     });
     const quantity =
       existItem && action === "decrease"
@@ -175,65 +144,67 @@ class App extends Component {
       </div>
     ) : (
       <BrowserRouter>
-        <div className="app">
-          <Navbar
-            categories={data.categories}
-            currencies={data.currencies}
-            activeCategory={this.state.activeCategory}
-            setCategory={this.setCategory}
-            activeCurrency={this.state.activeCurrency}
-            setCurrency={this.setCurrency}
-            dropdown={this.state.dropdown}
-            setDropdown={this.setDropdown}
-            cartItems={this.state.cartItems}
-            showMinicart={this.state.showMinicart}
-            toggleMinicart={this.toggleMinicart}
-            addToCart={this.addToCart}
-          />
-          <div className={this.state.showMinicart ? "background" : ""}>
-            <Routes>
-              <Route
-                path="/"
-                element={
-                  <PorductsListScreen
-                    setCategory={this.setCategory}
-                    activeCurrency={this.state.activeCurrency}
-                    addToCart={this.addToCart}
-                  />
-                }
-              />
-              <Route
-                path="/category/:category"
-                element={
-                  <PorductsListScreen
-                    setCategory={this.setCategory}
-                    activeCurrency={this.state.activeCurrency}
-                    addToCart={this.addToCart}
-                  />
-                }
-              />
+        <div className="app ">
+          <div className="wrapper">
+            <Navbar
+              categories={data.categories}
+              currencies={data.currencies}
+              activeCategory={this.state.activeCategory}
+              setCategory={this.setCategory}
+              activeCurrency={this.state.activeCurrency}
+              setCurrency={this.setCurrency}
+              dropdown={this.state.dropdown}
+              setDropdown={this.setDropdown}
+              cartItems={this.state.cartItems}
+              showMinicart={this.state.showMinicart}
+              toggleMinicart={this.toggleMinicart}
+              addToCart={this.addToCart}
+            />
+            <div className={this.state.showMinicart ? "background" : ""}>
+              <Routes>
+                <Route
+                  path="/"
+                  element={
+                    <PorductsListScreen
+                      setCategory={this.setCategory}
+                      activeCurrency={this.state.activeCurrency}
+                      addToCart={this.addToCart}
+                    />
+                  }
+                />
+                <Route
+                  path="/category/:category"
+                  element={
+                    <PorductsListScreen
+                      setCategory={this.setCategory}
+                      activeCurrency={this.state.activeCurrency}
+                      addToCart={this.addToCart}
+                    />
+                  }
+                />
 
-              <Route
-                path="/cart"
-                element={
-                  <CartScreen
-                    cartItems={this.state.cartItems}
-                    activeCurrency={this.state.activeCurrency}
-                    addToCart={this.addToCart}
-                  />
-                }
-              />
-              <Route
-                path="/product/:id"
-                element={
-                  <ProductScreen
-                    activeCurrency={this.state.activeCurrency}
-                    addToCart={this.addToCart}
-                  />
-                }
-              />
-              <Route path="*" element={<NoMatch />} />
-            </Routes>
+                <Route
+                  path="/cart"
+                  element={
+                    <CartScreen
+                      cartItems={this.state.cartItems}
+                      activeCurrency={this.state.activeCurrency}
+                      addToCart={this.addToCart}
+                    />
+                  }
+                />
+                <Route
+                  path="/product/:id"
+                  element={
+                    <ProductScreen
+                      activeCurrency={this.state.activeCurrency}
+                      addToCart={this.addToCart}
+                    />
+                  }
+                />
+                <Route path="*" element={<NoMatch />} />
+              </Routes>
+            </div>
           </div>
         </div>
       </BrowserRouter>

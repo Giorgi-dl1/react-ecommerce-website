@@ -60,6 +60,10 @@ a {
   }
   .background::after {
     left: -3rem;
-    right: -3rem;
+    right: -100%;
   }
+}
+.wrapper {
+  max-width: 1350px;
+  margin: auto;
 }

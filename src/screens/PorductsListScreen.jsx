@@ -56,7 +56,7 @@ class PorductsListScreen extends Component {
           {category.name}
         </p>
 
-        <div className="product-list">
+        <div className="product-list ">
           {category.products.map((product) => (
             <Product
               product={product}

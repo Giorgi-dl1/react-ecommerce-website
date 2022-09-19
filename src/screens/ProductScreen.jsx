@@ -55,7 +55,7 @@ class ProductScreen extends PureComponent {
     this.setState(stateObject);
   };
   componentDidMount() {
-    window.scrollTo(0, 80);
+    window.scrollTo(0, 0);
   }
   render() {
     const { data } = this.props;
