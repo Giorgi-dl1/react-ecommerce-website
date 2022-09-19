@@ -125,7 +125,7 @@ class ProductScreen extends PureComponent {
                 {this.state.showMessage &&
                   !this.state.activeAttributes[attribute.name] && (
                     <div style={{ color: "red", fontSize: 14, marginTop: 10 }}>
-                      please select "{attribute.name.toLowerCase()}"
+                      please select "{attribute.name}"
                     </div>
                   )}
               </div>
