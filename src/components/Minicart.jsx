@@ -1,24 +1,24 @@
-import React, { PureComponent } from "react";
-import "../styles/Minicart.css";
-import cart from "../images/cart.svg";
-import { getPrice, getTotalPrice } from "../utils";
-import AttributeItem from "./AttributeItem";
-import { Link } from "react-router-dom";
+import React, { PureComponent } from 'react'
+import '../styles/Minicart.css'
+import cart from '../images/cart.svg'
+import { getPrice, getTotalPrice } from '../utils'
+import AttributeItem from './AttributeItem'
+import { Link } from 'react-router-dom'
 
 export default class Minicart extends PureComponent {
   constructor(props) {
-    super(props);
+    super(props)
 
-    this.wrapperRef = React.createRef();
-    this.handleClickOutside = this.handleClickOutside.bind(this);
+    this.wrapperRef = React.createRef()
+    this.handleClickOutside = this.handleClickOutside.bind(this)
   }
 
   componentDidMount() {
-    document.addEventListener("mousedown", this.handleClickOutside);
+    document.addEventListener('mousedown', this.handleClickOutside)
   }
 
   componentWillUnmount() {
-    document.removeEventListener("mousedown", this.handleClickOutside);
+    document.removeEventListener('mousedown', this.handleClickOutside)
   }
 
   handleClickOutside(event) {
@@ -27,7 +27,7 @@ export default class Minicart extends PureComponent {
       !this.wrapperRef.current.contains(event.target) &&
       this.props.showMinicart
     ) {
-      this.props.toggleMinicart();
+      this.props.toggleMinicart()
     }
   }
   render() {
@@ -37,9 +37,9 @@ export default class Minicart extends PureComponent {
       showMinicart,
       activeCurrency,
       addToCart,
-    } = this.props;
-    const totalQuantity = cartItems?.reduce((a, c) => a + c.quantity, 0);
-    const totalPrice = getTotalPrice(cartItems, activeCurrency);
+    } = this.props
+    const totalQuantity = cartItems?.reduce((a, c) => a + c.quantity, 0)
+    const totalPrice = getTotalPrice(cartItems, activeCurrency)
     return (
       <div className="cart" ref={this.wrapperRef}>
         <div className="nav__cart-icon" onClick={toggleMinicart}>
@@ -51,7 +51,7 @@ export default class Minicart extends PureComponent {
             </div>
           )}
         </div>
-        <div className={showMinicart ? "minicart show" : "minicart"}>
+        <div className={showMinicart ? 'minicart show' : 'minicart'}>
           {cartItems.length ? (
             <div className="minicart-items">
               <div className="header">
@@ -60,24 +60,24 @@ export default class Minicart extends PureComponent {
               </div>
               <div className="minicart-products styled-scrollbar">
                 {cartItems.map((item, index) => {
-                  const price = getPrice(item.product.prices, activeCurrency);
+                  const price = getPrice(item.product?.prices, activeCurrency)
                   return (
                     <div className="minicart-product" key={index}>
                       <div className="minicart-product-info">
                         <div className="brand-name">
-                          <div>{item.product.brand}</div>
+                          <div>{item.product?.brand}</div>
                           <div>
                             <Link
-                              to={`/product/${item.product.id}`}
+                              to={`/product/${item.product?.id}`}
                               onClick={showMinicart && toggleMinicart}
                             >
-                              {item.product.name}
+                              {item.product?.name}
                             </Link>
                           </div>
                         </div>
                         <div className="minicart-price">
-                          <span>{price.currency.symbol}</span>
-                          <span>{price.amount}</span>
+                          <span>{price?.currency.symbol}</span>
+                          <span>{price?.amount}</span>
                         </div>
                         <div className="minicart-attributes">
                           {item?.product?.attributes?.map((attribute) => (
@@ -120,7 +120,7 @@ export default class Minicart extends PureComponent {
                               addToCart(
                                 item.product,
                                 item.activeAttributes,
-                                "decrease"
+                                'decrease',
                               )
                             }
                           >
@@ -128,11 +128,11 @@ export default class Minicart extends PureComponent {
                           </button>
                         </div>
                         <div className="minicart-image">
-                          <img src={item.product.gallery[0]} alt="" />
+                          <img src={item?.product?.gallery[0]} alt="" />
                         </div>
                       </div>
                     </div>
-                  );
+                  )
                 })}
               </div>
               <div className="minicart-bottom">
@@ -157,6 +157,6 @@ export default class Minicart extends PureComponent {
           )}
         </div>
       </div>
-    );
+    )
   }
 }

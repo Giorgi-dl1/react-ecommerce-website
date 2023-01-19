@@ -1,14 +1,14 @@
-import React, { Component } from "react";
-import { gql } from "@apollo/client";
-import { graphql } from "@apollo/client/react/hoc";
-import Navbar from "./components/Navbar";
-import LoadingBox from "./components/LoadingBox";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import PorductsListScreen from "./screens/PorductsListScreen";
-import ProductScreen from "./screens/ProductScreen";
-import { isEqual } from "./utils";
-import CartScreen from "./screens/CartScreen";
-import NoMatch from "./components/NoMatch";
+import React, { Component } from 'react'
+import { gql } from '@apollo/client'
+import { graphql } from '@apollo/client/react/hoc'
+import Navbar from './components/Navbar'
+import LoadingBox from './components/LoadingBox'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import PorductsListScreen from './screens/PorductsListScreen'
+import ProductScreen from './screens/ProductScreen'
+import { isEqual } from './utils'
+import CartScreen from './screens/CartScreen'
+import NoMatch from './components/NoMatch'
 
 const GET_CATEGORIES = gql`
   query {
@@ -16,87 +16,87 @@ const GET_CATEGORIES = gql`
       name
     }
   }
-`;
+`
 
 class App extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
-      activeCategory: localStorage.getItem("activeCategory") || "all",
-      activeCurrency: JSON.parse(localStorage.getItem("activeCurrency")) || {
-        symbol: "$",
-        label: "USD",
+      activeCategory: localStorage.getItem('activeCategory') || 'all',
+      activeCurrency: JSON.parse(localStorage.getItem('activeCurrency')) || {
+        symbol: '$',
+        label: 'USD',
       },
       dropdown: false,
       showMinicart: false,
-      cartItems: localStorage.getItem("cartItems")
-        ? JSON.parse(localStorage.getItem("cartItems"))
+      cartItems: localStorage.getItem('cartItems')
+        ? JSON.parse(localStorage.getItem('cartItems'))
         : [],
-    };
+    }
   }
 
   setCategory = (category) => {
     this.setState({
       activeCategory: category,
-    });
-    localStorage.setItem("activeCategory", category);
-  };
+    })
+    localStorage.setItem('activeCategory', category)
+  }
   toggleMinicart = () => {
     this.setState((state) => ({
       showMinicart: !state.showMinicart,
-    }));
-  };
+    }))
+  }
   setCurrency = (currency) => {
     this.setState({
       activeCurrency: currency,
       dropdown: false,
-    });
+    })
     localStorage.setItem(
-      "activeCurrency",
-      JSON.stringify({ symbol: currency.symbol, label: currency.label })
-    );
-  };
+      'activeCurrency',
+      JSON.stringify({ symbol: currency.symbol, label: currency.label }),
+    )
+  }
 
   setDropdown = () => {
     this.setState((state) => ({
       dropdown: !state.dropdown,
-    }));
-  };
+    }))
+  }
 
   addToCart = (product, activeAttributes, action) => {
     const existItem = this.state.cartItems?.find((item) => {
       return activeAttributes
-        ? item.product.id === product.id &&
+        ? item.product?.id === product?.id &&
             isEqual(item.activeAttributes, activeAttributes)
-        : item.product.id === product.id;
-    });
+        : item.product?.id === product?.id
+    })
     const quantity =
-      existItem && action === "decrease"
+      existItem && action === 'decrease'
         ? existItem.quantity - 1
         : existItem
         ? existItem.quantity + 1
-        : 1;
+        : 1
     if (quantity < 1) {
       const updateCartItems = activeAttributes
         ? this.state.cartItems.filter((item) => {
             if (
-              item.product.id === existItem.product.id &&
+              item.product?.id === existItem.product?.id &&
               isEqual(item.activeAttributes, existItem.activeAttributes)
             ) {
-              return false;
+              return false
             } else {
-              return true;
+              return true
             }
           })
         : this.state.cartItems.filter(
-            (item) => item.product.id !== existItem.product.id
-          );
+            (item) => item.product.id !== existItem.product.id,
+          )
       this.setState({
         cartItems: updateCartItems,
-      });
-      localStorage.setItem("cartItems", JSON.stringify(updateCartItems));
+      })
+      localStorage.setItem('cartItems', JSON.stringify(updateCartItems))
 
-      return;
+      return
     }
     const updateCartItems =
       existItem && activeAttributes
@@ -104,23 +104,23 @@ class App extends Component {
             item.product.id === existItem.product.id &&
             isEqual(item.activeAttributes, existItem.activeAttributes)
               ? { product, activeAttributes, quantity }
-              : item
+              : item,
           )
         : existItem
         ? this.state.cartItems.map((item) =>
             item.product.id === existItem.product.id
               ? { product, activeAttributes, quantity }
-              : item
+              : item,
           )
-        : [...this.state.cartItems, { product, activeAttributes, quantity }];
+        : [...this.state.cartItems, { product, activeAttributes, quantity }]
     this.setState({
       cartItems: updateCartItems,
-    });
-    localStorage.setItem("cartItems", JSON.stringify(updateCartItems));
-  };
+    })
+    localStorage.setItem('cartItems', JSON.stringify(updateCartItems))
+  }
 
   render() {
-    const { error, loading, categories } = this.props.data;
+    const { error, loading, categories } = this.props.data
     return loading ? (
       <LoadingBox />
     ) : error ? (
@@ -144,7 +144,7 @@ class App extends Component {
               toggleMinicart={this.toggleMinicart}
               addToCart={this.addToCart}
             />
-            <div className={this.state.showMinicart ? "background" : ""}>
+            <div className={this.state.showMinicart ? 'background' : ''}>
               <Routes>
                 <Route
                   path="/"
@@ -192,8 +192,8 @@ class App extends Component {
           </div>
         </div>
       </BrowserRouter>
-    );
+    )
   }
 }
 
-export default graphql(GET_CATEGORIES)(App);
+export default graphql(GET_CATEGORIES)(App)

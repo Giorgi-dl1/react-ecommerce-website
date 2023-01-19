@@ -1,9 +1,9 @@
-import { gql } from "@apollo/client";
-import { graphql } from "@apollo/client/react/hoc";
-import React, { PureComponent } from "react";
-import LoadingBox from "../components/LoadingBox";
-import Product from "../components/Product";
-import "../styles/PorductsListScreen.css";
+import { gql } from '@apollo/client'
+import { graphql } from '@apollo/client/react/hoc'
+import React, { PureComponent } from 'react'
+import LoadingBox from '../components/LoadingBox'
+import Product from '../components/Product'
+import '../styles/PorductsListScreen.css'
 
 const GET_PRODUCTS = gql`
   query GET_PRODUCTS($title: String!) {
@@ -38,21 +38,21 @@ const GET_PRODUCTS = gql`
       }
     }
   }
-`;
+`
 class PorductsListScreen extends PureComponent {
   componentDidMount() {
-    this.props.setCategory(window.location.href.split("/")[4] || "all");
+    this.props.setCategory(window.location.href.split('/')[4] || 'all')
   }
   render() {
-    const { data } = this.props;
-    const { loading, error, category } = data;
+    const { data } = this.props
+    const { loading, error, category } = data
     return loading ? (
       <LoadingBox />
     ) : error ? (
       <div className="error">{error.message}</div>
     ) : (
       <div>
-        <p style={{ fontWeight: 400, fontSize: 42, margin: "5rem 0" }}>
+        <p style={{ fontWeight: 400, fontSize: 42, margin: '5rem 0' }}>
           {category.name}
         </p>
 
@@ -67,14 +67,14 @@ class PorductsListScreen extends PureComponent {
           ))}
         </div>
       </div>
-    );
+    )
   }
 }
 
 export default graphql(GET_PRODUCTS, {
   options: (props) => ({
     variables: {
-      title: window.location.href.split("/")[4] || "all",
+      title: window.location.href.split('/')[4] || 'all',
     },
   }),
-})(PorductsListScreen);
+})(PorductsListScreen)
